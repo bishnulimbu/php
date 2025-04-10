@@ -9,8 +9,11 @@ Route::get('/', function () {
 });
 
 Route::get('/job', function () {
-    return view('job', ['jobs'=>Job::all()]);
-});
+    // $job= Job::with('employer')->get(); replaced with paginator
+    $job = Job::paginate(3);
+    //can use simplePaginate for very big pages.
+    return view('job', ['jobs'=>$job]);
+});  //eager loading parctise
 
 Route::get('/job/{id}', function($id){
     return view('jobsee',['job'=>Job::find($id)]);
