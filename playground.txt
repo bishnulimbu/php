@@ -1,0 +1,28 @@
+tailwind css for card:   add block and padding. border border-gray-color rounded-lg spacing-y-4
+eager loading--    job with employer as a function  and get();
+paginator divide the data into pages.  links() works vendor packages. simplePaginate for large data, and cursor but it donesn't have 1,2,3, page numbers.
+to run seeder can be used php artisan db:seed --class=classname;
+day 16. forms naming convention. index,show and such and {id} wildcard route should be at button at this listen to /job/everything so. leader shift a
+@csrf for post request and request()->all for getting the attributes from the html 
+latest() at paginator for recents
+$error    {{$message}} for validation of any error encountered.
+edit link and ->for data access and placeholder, value replace.
+//validate, //authorize   finorfail @method('patch') 
+laravel route bindings. wildcard and parameter name should be same.
+
+controller. route-list --except-vendor
+Route::controller(JobController::class)->group(function(){})
+
+--auth custom..  from-label, error, input by x-form-label or such and addign attribute->merge[(class=>)]?
+registeredusercontroller  auth->register path username,email,password,passowrd_confirmation
+sessioncontroller for login.
+login part-2 store-> validate create login command n for new eloquent User
+validate 'confirmed' will looker for passowrd_confirmation in another attribute . type=password
+for login. validate->login->sessionset>redirect attempt. illuminate validation for validationexception :value(old'email');
+reference a foreign id for user in employer table and add userfactory in employer factory and migrate fresh and seed
+is(auth::user()) for checking abort 403 for unauthorized user. also table get for the id check.
+Gate define then 'edit-job' and then function that takes user and job instances as in Job $job gateauthorize edit-job job move the gate define to appserprov 
+when adding middleware auth to resource route it could lead to error as name login not found so respective route should have ->name('login') for it.
+we can reference addition middleware as a array as in (['auth','can:edit-job,job']) or ->can('edit-job','job')
+make:policy    gate for simple and policy for complex
+
