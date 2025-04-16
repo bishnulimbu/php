@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class JobController extends Controller
 {
@@ -28,12 +31,22 @@ class JobController extends Controller
         Job::create([
             'title' => request('title'),
             'salary' => request('salary'),
-            'employer_id' => 1,
+            'employer_id' => Auth::user()->employer->id,
         ]);
         return redirect('/job');
     }
     public function edit(Job $job)
     {
+        // if($job->employer->user->isNot(Auth::user())){
+        //     abort(403)->with('error', 'You are not allowed to edit this job!');
+        // }
+        // dd($job->empoyer->user->Auth::user());
+    //    dd($job->employer->user->is(Auth::user()));
+    // if (auth::user()->can('edit-job', $job)) {
+    //        dd('can nnot runned') 
+    //         }is not needed necessarily
+        // Gate::authorize('edit-job',$job);
+        // middleware can be used in route for this
         return view('jobs.edit', ['job' => $job]);
     }
     public function update(Job $job)
