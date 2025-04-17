@@ -25,4 +25,5 @@ Gate define then 'edit-job' and then function that takes user and job instances 
 when adding middleware auth to resource route it could lead to error as name login not found so respective route should have ->name('login') for it.
 we can reference addition middleware as a array as in (['auth','can:edit-job,job']) or ->can('edit-job','job')
 make:policy    gate for simple and policy for complex
-
+make:job TranslateJob also restart new working in any new dispatch is made
+ctrl k w for close all
