@@ -69,6 +69,8 @@ class FormController extends Controller
     public function destroy(string $id)
     {
         
+        Form::destory($id);
+        return redirect('/forms');
         
     }
 }
