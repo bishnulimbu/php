@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-    <title>Laravel Learning Currently</title>
-</head>
-<body class="max-w-7xl mx-auto">
-        @include('components.navbar')
-        @yield('content')
-        {{-- toast notification --}}
-@if(session('success'))
-    <div class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded shadow-lg z-50 animate-bounce">
-        {{ session('success') }}
-    </div>
-@endif
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-@if(session('error'))
-    <div class="fixed top-4 right-4 bg-red-500 text-white px-4 py-3 rounded shadow-lg z-50 animate-bounce">
-        {{ session('error') }}
-    </div>
-@endif
-<script>
-    setTimeout(() => {
-        document.querySelectorAll('[class*="fixed"]').forEach(el => el.remove());
-    }, 1000); // 3 seconds
-</script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Title -->
+    <title>Laravel Learning Currently</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- tailwindcdn link -->
+<script src="https://cdn.tailwindcss.com"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    @vite(['resources/css/app.css','resources/js/app.js'])    
+</head>
+
+<body class="max-w-7xl mx-auto">
+    {{-- Navbar --}}
+    @include('components.navbar')
+
+    <!-- Page Heading (only if $header is set) -->
+    @isset($header)
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
+    @endisset
+
+    <!-- Page Content -->
+    @yield('content')
+
+    <!-- Toast Notifications (success and error) -->
+    @if (session('success'))
+        <div class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded shadow-lg z-50 animate-bounce">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="fixed top-4 right-4 bg-red-500 text-white px-4 py-3 rounded shadow-lg z-50 animate-bounce">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <!-- Remove Toast Notifications after a brief delay -->
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('[class*="fixed"]').forEach(el => el.remove());
+        }, 3000); // 3 seconds for better visibility
+    </script>
 </body>
+
 </html>
