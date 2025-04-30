@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="flex flex-col items-center justify-center pt-10">
-        <h1 class="text-3xl text-center  font-sans mb-6">
+        <h1 class="text-3xl text-center font-sans mb-6">
             Hello World
         </h1>
         <div class="flex space-x-4">
