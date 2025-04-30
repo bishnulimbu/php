@@ -1,14 +1,28 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Routing\RouteGroup;
-use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\Attributes\Group;
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
 
 Route::get('/', function () {
     return view('welcome');
-})->name('/');
+})->name('home');
 // Route::get('tododashboard',function(){
 //     return view('todos.index');
 // })->name('todo-dashboard');
@@ -31,3 +45,7 @@ Route::delete('forms/{form}',[FormController::class,'destroy'])->name('forms.des
 
 Route::resource('todos',TodoController::class);
 Route::put('/todos/{todo}/update-status',[TodoController::class,'updateStatus'])->name('todos.update-status');
+
+Route::get('posts',[PostController::class,'index'])->name('posts.index');
+Route::get('posts/create',[PostController::class,'create'])->name('posts.create');
+Route::post('posts',[PostController::class,'store'])->name('posts.store');
