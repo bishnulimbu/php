@@ -8,6 +8,8 @@
             <a href="{{route('forms.index')}}" class="underline text-blue-500 hover:text-blue-700">Form DashBoard</a>
             <span class="text-gray-400">|</span>
             <a href="{{route('todos.index')}}" class="underline text-blue-500 hover:text-blue-700">To do Dashboard</a>
+            <span class="text-gray-400">|</span>
+            <a href="{{route('posts.index')}}" class="underline text-blue-500 hover:text-blue-700">Post Dashboard</a>
         </div>
     </div>
 @endsection
