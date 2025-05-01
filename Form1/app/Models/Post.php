@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable=['title','body','is_published','slug','user_id'];
+    use HasFactory;
+    protected $fillable=['title','body','is_published','slug','category_id','user_id'];
+
     public function comment(){
         return $this->hasMany(Comment::class);
     }
