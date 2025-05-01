@@ -43,7 +43,10 @@
 
             <div class="mb-4">
                 <label for="is_published" class="block text-gray-700 text-sm font-bold mb-2">Publish?</label>
-                <input type="checkbox" value={{old('id_published')}} name="is_published" id="is_published" value="1" class="form-checkbox h-5 w-5 text-green-500 focus:outline-none focus:shadow-outline">
+                <input type="hidden" name="is_published" value="0">
+                <input type="checkbox"  name="is_published" id="is_published" value="1" class="form-checkbox h-5 w-5 text-green-500 focus:outline-none focus:shadow-outline"
+                    {{old('is_published')?'checked':''}}
+                >
                 <span class="text-gray-700 text-sm ml-2">Check to publish</span>
                 @error('is_published')
                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
