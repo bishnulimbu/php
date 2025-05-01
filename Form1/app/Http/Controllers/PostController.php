@@ -13,7 +13,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        $posts=Post::latest()->paginate(6);
+        return view('posts.index',compact('posts'));
     }
 
     /**
@@ -29,18 +30,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([
+            'is_published'=>$request->has('is_published')?true:false,
+        ]);
         $validated=$request->validate([
             'title'=>'required|string|max:255',
             'category_id'=>'required|exists:categories,id',
-            // 'user_id'=>'required|exists:users,id',
             'body'=>'required|string|min:10',
             'is_published'=>'boolean',
             'slug'=>'nullable|string|unique:posts,slug'
         ]);
         $validated['slug']=$validated['slug']??Str::slug($validated['title']);
-        $validated['user_id']=auth()->user()->id;
+        $validated['user_id']=auth()->id();
         
-        Post::create(array_merge($validated));
+        Post::create($validated);
         return redirect()->route('posts.index')->with('success','post added successfully');
     }
 
