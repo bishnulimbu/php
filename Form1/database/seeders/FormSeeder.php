@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Todo;
+use App\Models\Form;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TodoSeeder extends Seeder
+class FormSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Todo::factory(10)->create();
+        Form::factory(10)->create();
     }
 }
