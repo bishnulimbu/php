@@ -27,3 +27,38 @@ we can reference addition middleware as a array as in (['auth','can:edit-job,job
 make:policy    gate for simple and policy for complex
 make:job TranslateJob also restart new working in any new dispatch is made
 ctrl k w for close all
+flex-1 for filling the gap
+picsum.phots/seed/{{rand(0,10000)}}/100/100 for random image
+hanken grotesk font form google
+mt-auto for pushing the last flex item to last as possible
+@props(['width'=>90]) :width('42')
+group class added in div. and if group-hover apply css.
+make:migration empoyertable.. name,logo,forid:userclass.relation
+make job->queued_jobs in queue.php queued_job_batches queued_failed_jobs
+migration table name change also.
+make:model -cfs --policy
+title,employerid,salary,location,schedule,url,featured(false)
+user hasone employer, empoyer belongs to user
+empoyer hasmany jobs,employer job hasmany jobs
+randomElement for factory
+phpunit for pest testing uncommenting the sql make:test jobtest unit
+AAA arrange empoyer,job and add->eployerid->emloyer id to override usercreate, act, assert
+check instance $job->employer->is($employer)->toBeTrue();
+in pest uncomment the refresh uses and include unit for solving the encountered error
+
+constraint and oncascadedelete for delete connected relation table data
+foreach()  :tag=>"$tag" can be written as :$tag
+call jobseeder in main seeder
+tag ma tag create then has attach while create job
+groupby('featured');
+@if(get methodget==get) do attribute getmethod if not @csrf
+__invoke in a controller functions as a constructor in route.
+in route {tag:name} instead of id return jobs associated with tag target _blank for new page
+php artisan storage:link for making the assets public
+with(['tag','employer'])-> for eager load N+1 problem 
+
+do this in the vendor targeted file to ignore the null node bug
+ // Wrap content in body tag if it doesn't exist
+        if (strpos($html, '<body') === false) {
+            $html = '<body>'.$html.'</body>';
+        }
