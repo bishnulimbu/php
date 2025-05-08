@@ -1,4 +1,4 @@
-<nav class="bg-gray-100 py-4">
+<nav class="bg-gray-100 py-4 rounded-lg mb-4 p-3">
     <div class="container mx-auto flex justify-between items-center">
         <div>
             <a href="{{ route('home') }}" class="text-blue-500 hover:text-blue-700 font-semibold">Home</a>
@@ -12,6 +12,12 @@
                 <x-createRouteNav routeName="forms">Create Form</x-createRouteNav>
                 <x-createRouteNav routeName="todos">Create Todo</x-createRouteNav>
                 <x-createRouteNav routeName="posts">Create Post</x-createRouteNav>
+            @auth
+                @if (auth()->user())
+                    <a href="{{ route('admin') }}"
+                        class="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition-colors duration-150">admin</a>
+                @endif
+            @endauth
         </div>
 <div class="relative" x-data="{ open: false }">
     <button @click="open = !open" class="text-blue-500 hover:text-blue-700 font-semibold">
