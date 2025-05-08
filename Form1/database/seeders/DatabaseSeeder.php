@@ -8,6 +8,7 @@ use App\Models\Todo;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,9 +25,11 @@ class DatabaseSeeder extends Seeder
             FormSeeder::class,
         ]);
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'Subash Limbu',
+            'email' => 'daosaintlord@gmail.com',
+            'is_admin'=>1,
+            'password'=>Hash::make('123123123'),
+        ]);
     }
 }
