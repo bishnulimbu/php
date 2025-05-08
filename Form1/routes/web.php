@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
@@ -44,8 +45,18 @@ Route::delete('forms/{form}',[FormController::class,'destroy'])->name('forms.des
 
 
 Route::resource('todos',TodoController::class);
+Route::resource('categories',CategoryController::class);
 Route::put('/todos/{todo}/update-status',[TodoController::class,'updateStatus'])->name('todos.update-status');
 
 Route::get('posts',[PostController::class,'index'])->name('posts.index');
 Route::get('posts/create',[PostController::class,'create'])->name('posts.create');
-Route::post('posts',[PostController::class,'store'])->name('posts.store');
+Route::post('posts',[PostController::class,'store'])->name('posts.store')->middleware('auth');
+Route::get('posts/{post}',[PostController::class,'show'])->name('posts.show');
+Route::get('posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit');
+Route::put('posts/{post}',[PostController::class,'update'])->name('posts.update');
+Route::delete('posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');
+Route::get('admin',[PostController::class, 'adminIndex'])->name('admin');
+
+// Route::get('admin',function(){
+//     return view('posts.admin');
+// })->name('admin');
