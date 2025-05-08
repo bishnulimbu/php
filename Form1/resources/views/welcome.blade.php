@@ -1,4 +1,15 @@
 @extends('layouts.app')
+@push('styles')
+  <style>
+        body {
+            background-image: url('{{ asset('img/background.jpg') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="flex flex-col items-center justify-center pt-10">
         <h1 class="text-3xl text-center font-sans mb-6">
