@@ -6,6 +6,8 @@ use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -16,7 +18,7 @@ class PostController extends Controller
     private function getPosts(){
         if
         (auth()->check() && auth()->user()->is_admin){
-        return Post::with('images')->latest()->paginate(6);
+        return Post::with('images')->latest()->paginate();
         }else{
         return Post::with('images')
                     ->where('user_id',auth()->id())
@@ -53,35 +55,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge([
-            'is_published'=>$request->has('is_published')?true:false,
-        ]);
+        // $request->merge([
+        //     'is_published'=>$request->has('is_published')?true:false,
+        // ]);
         $validated=$request->validate([
             'title'=>'required|string|max:255',
             'category_id'=>'required|exists:categories,id',
             'body'=>'required|string|min:10',
             'is_published'=>'boolean',
             'slug'=>'nullable|string|unique:posts,slug',
-            'images'=>'required',
             'images.*'=>'image|mimes:jpeg,png,jpg,svg,gif,webp|max:10000'
         ]);
         $validated['slug']=$validated['slug']??Str::slug($validated['title']);
         $validated['user_id']=auth()->id();
 
         $post =Post::create($validated);
-        
-        if($request->hasFile('images')){
-            foreach($request->file('images') as $imageFile){
-                 $fileName = Str::random(20) . '_' . $imageFile->getClientOriginalName();
-                
-                // Store the file
-                $filePath = $imageFile->storeAs('posts/' . $post->id, $fileName, 'public');
-                Image::create([
-                    'post_id'=>$post->id,
-                    'image_path'=>$filePath
-                ]);
-            }
-        }
+        $this->uploadImages($request,$post);
+
         
         return redirect()->route('posts.index')->with('success','post added successfully');
     }
@@ -97,25 +87,51 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        return view('posts.edit',compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  Post $post)
     {
-        //
+        $validated=$request->validate([
+            'title'=>'required|string|max:255',
+            'category_id'=>'required|exists:categories,id',
+            'body'=>'required|string|min:10',
+            'is_published'=>'boolean',
+            'slug'=>['nullable','string',Rule::unique('posts','slug')->ignore($post->id)],
+            'images.*'=>'image|mimes:jpeg,png,jpg,svg,gif,webp|max:10000'
+        ]);
+        $validated['slug']=$validated['slug']??Str::slug($validated['title']);
+
+        $post->update($validated);
+        $this->uploadImages($request,$post);//reusing code
+        
+        // dd($post);
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Post $post)
     {
         $post->delete();
+        Storage::disk('public')->deleteDirectory("posts/{$post->id}");
         return redirect()->route('admin')->with('success','Post deleted successfully');
+    }
+
+    private function uploadImages(Request $request,Post $post){
+        if($request->hasFile('images')){
+            foreach($request->file('images') as $imageFile){
+                 $fileName = Str::random(20) . '_' . $imageFile->getClientOriginalName();
+                // Store the file
+                $filePath = $imageFile->storeAs('posts/' . $post->id, $fileName, 'public');
+                Image::create([
+                    'post_id'=>$post->id,
+                    'image_path'=>$filePath
+                ]);
+            }
+        }
     }
 }
