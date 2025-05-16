@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Routing\RouteGroup;
@@ -24,17 +25,7 @@ require __DIR__.'/auth.php';
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-// Route::get('tododashboard',function(){
-//     return view('todos.index');
-// })->name('todo-dashboard');
-// Route::post('add',function(){
-//     dd(request()->all());
-// })->name('add');//adding a name url do directly acces using route from html
-
-// Route::controller(FormController::class)->group(function(){
-//     Route::get('forms','index')->name('forms.index');
-    
-// });
+;
 Route::get('forms',[FormController::class,'index'])->name('forms.index');
 Route::get('forms/create',[FormController::class,'create'])->name('forms.create');
 Route::post('forms',[FormController::class,'store'])->name('forms.store');
@@ -51,12 +42,25 @@ Route::put('/todos/{todo}/update-status',[TodoController::class,'updateStatus'])
 Route::get('posts',[PostController::class,'index'])->name('posts.index');
 Route::get('posts/create',[PostController::class,'create'])->name('posts.create');
 Route::post('posts',[PostController::class,'store'])->name('posts.store')->middleware('auth');
-Route::get('posts/{post}',[PostController::class,'show'])->name('posts.show');
+Route::get('posts/{post:slug}',[PostController::class,'show'])->name('posts.show');
 Route::get('posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit');
 Route::put('posts/{post}',[PostController::class,'update'])->name('posts.update');
 Route::delete('posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');
 Route::get('admin',[PostController::class, 'adminIndex'])->name('admin');
 
+Route::delete('images/{image}',[ImageController::class, 'destroy'])->name('images.delete');
+
 // Route::get('admin',function(){
 //     return view('posts.admin');
 // })->name('admin');
+// Route::get('tododashboard',function(){
+//     return view('todos.index');
+// })->name('todo-dashboard');
+// Route::post('add',function(){
+//     dd(request()->all());
+// })->name('add');//adding a name url do directly acces using route from html
+
+// Route::controller(FormController::class)->group(function(){
+//     Route::get('forms','index')->name('forms.index');
+    
+// })
