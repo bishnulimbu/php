@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('styles')
-  <style>
+    <style>
         body {
             background-image: url('{{ asset('img/background.jpg') }}');
             background-size: cover;
@@ -16,11 +16,11 @@
             Hello World
         </h1>
         <div class="flex space-x-4">
-            <a href="{{route('forms.index')}}" class="underline text-blue-500 hover:text-blue-700">Form DashBoard</a>
+            <a href="{{ route('forms.index') }}" class="underline text-blue-500 hover:text-blue-700">Form DashBoard</a>
             <span class="text-gray-400">|</span>
-            <a href="{{route('todos.index')}}" class="underline text-blue-500 hover:text-blue-700">To do Dashboard</a>
+            <a href="{{ route('todos.index') }}" class="underline text-blue-500 hover:text-blue-700">To do Dashboard</a>
             <span class="text-gray-400">|</span>
-            <a href="{{route('posts.index')}}" class="underline text-blue-500 hover:text-blue-700">Post Dashboard</a>
+            <a href="{{ route('posts.index') }}" class="underline text-blue-500 hover:text-blue-700">Post Dashboard</a>
         </div>
     </div>
 @endsection
