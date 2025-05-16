@@ -6,6 +6,8 @@ use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -107,6 +109,7 @@ class PostController extends Controller
         ]);
         $validated['slug']=$validated['slug']??Str::slug($validated['title']);
 
+        $this->authorize('update',$post);
         $post->update($validated);
         $this->uploadImages($request,$post);//reusing code
         
@@ -116,8 +119,9 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        $post->delete();
+        Gate::authorize('delete-post',$post);
         Storage::disk('public')->deleteDirectory("posts/{$post->id}");
+        $post->delete();
         return redirect()->route('admin')->with('success','Post deleted successfully');
     }
 
