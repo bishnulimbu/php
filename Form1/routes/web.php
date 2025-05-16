@@ -43,10 +43,14 @@ Route::get('posts',[PostController::class,'index'])->name('posts.index');
 Route::get('posts/create',[PostController::class,'create'])->name('posts.create');
 Route::post('posts',[PostController::class,'store'])->name('posts.store')->middleware('auth');
 Route::get('posts/{post:slug}',[PostController::class,'show'])->name('posts.show');
-Route::get('posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit');
+Route::get('posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit')->middleware('auth');
 Route::put('posts/{post}',[PostController::class,'update'])->name('posts.update');
 Route::delete('posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');
-Route::get('admin',[PostController::class, 'adminIndex'])->name('admin');
+Route::get('admin',[PostController::class, 'adminIndex'])->name('admin')->middleware('auth');
+
+// Route::middleware(['auth'])->group(function(){
+//     Route::resource('posts',PostController::class)->except(['index','show']);
+// });
 
 Route::delete('images/{image}',[ImageController::class, 'destroy'])->name('images.delete');
 
