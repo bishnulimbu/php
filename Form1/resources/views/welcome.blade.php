@@ -11,7 +11,7 @@
 @endpush
 
 @section('content')
-    <div class="flex flex-col items-center justify-center pt-10">
+    <div class="flex flex-col items-center justify-center pt-10 max-h-l">
         <h1 class="text-3xl text-center font-sans mb-6">
             Hello World
         </h1>
